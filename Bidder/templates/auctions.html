@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% include 'nav.html' %}
+
+              
+{% load static %}
+
+<section class="section">
+    <section class="container">
+        
+            <div class="col s12">
+                    <div class="card">
+                            <div class="card-content">
+                                <h4>Welcome to the marketplace</h4>
+                                <p>Explore products by various listed categories</p>
+                                <img src="{% static 'ishant-mishra-1349434-unsplash.jpg' %}" alt="" class="responsive-img fade-in">
+                            </div>
+                        </div>
+            </div>
+
+            <div class="card">
+                <div class="card-content">
+                        <table class="table responsive-table">
+                                <thead>
+                                    <tr>
+
+                                        <th>Product Name</th>
+                                        <th>Title</th>
+                                        <th>Product Category</th>
+                                        <th>Start Price</th>
+                                        <th>Added</th>
+                                        <th>Modified</th>
+                                        <th>View Details</th>
+                                    </tr>
+                                </thead>
+                
+                                <tbody>
+                                        {%for a in auctions %}
+                                        <tr>
+                             
+                                            <td><span class="chip indigo white-text">{{ a.product.name }}</span></td>
+                                            <td>{{ a.title }}</td>
+                                            <td>{{ a.product.category }}</td>
+                                            <td>{{ a.start_price }}</td>
+                                            <td>{{ a.created }}</td>
+                                            <td>{{ a.modified }}</td>
+                                            <td><a href="{% url 'system:auction-detail' a.id %}" style="margin-top: 1rem;" class="btn pink waves-effect waves-light">View Details</a></td>
+                                        </tr>
+                                        {% endfor %}
+                                </tbody>
+                            </table>
+
+                            <ul class="pagination center">
+                                {% if auctions.has_previous %}
+                                <li class="waves-effect"><a href="?page={{auctions.previous_page_number}}">{{ auctions.previous_page_number}}</a></li>
+                                {% endif %}
+
+                                <li class="active indigo"><a href="#!">{{auctions.number}}</a></li>
+                               
+                                {% if auctions.has_next %}
+                                <li class="waves-effect"><a href="?page={{auctions.next_page_number}}">{{ auctions.next_page_number}}</a></li>
+                                {% endif %}
+                            </ul>
+                                            
+                </div>
+            </div>
+
+    </section>
+</section>
+
+{% include 'footer.html' %}
+{% endblock content %}
